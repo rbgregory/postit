@@ -4,8 +4,7 @@ class PostsController < ApplicationController
     @posts = Post.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @post = Post.new
@@ -13,6 +12,9 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.creator = User.first #TODO: change once we have authentication... this is just
+                               #to make sure our post does not have a nil foreign key for
+                               #the user.
 
     if @post.save
       flash[:notice] = "Your post was created."
@@ -23,8 +25,7 @@ class PostsController < ApplicationController
 
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @post.update(post_params)
@@ -37,9 +38,10 @@ class PostsController < ApplicationController
 
 private
 
-#strong parameters
+#strong parameters to expose the fields we want
+#to mass assign
   def post_params
-    params.require(:post).permit!
+    params.require(:post).permit(:title, :url, :description)
   end
 
   def set_post
