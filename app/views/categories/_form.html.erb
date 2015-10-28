@@ -1,15 +1,6 @@
-  <% if @category.errors.any? %>
-  <div class='row'>
-  <div class='alert alert-error span8'>
-    <h4>There were some errors:</h4>
-    <ul>
-      <% @category.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-    </div>
-  </div>
-  <% end %>
+<% if @category.errors.any? %>
+  <%= render 'shared/errors', obj: @category %>
+<% end %>
 
 <div class='well'>
   <%= form_for @category do |f| %>
