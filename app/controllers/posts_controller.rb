@@ -4,7 +4,7 @@ class PostsController < ApplicationController
     @posts = Post.all
   end
 
-  def show 
+  def show
     @comment = Comment.new
   end
 
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
   def edit; end
 
   def update
-    if @post.update(post_params)
+    if @post.update(post_params)      #mass assignment
       flash[:notice] = "The post was updated."
       redirect_to post_path
     else
@@ -43,7 +43,7 @@ private
 #strong parameters to expose the fields we want
 #to mass assign
   def post_params
-    params.require(:post).permit(:title, :url, :description)
+    params.require(:post).permit(:title, :url, :description, category_ids: [])  #notice special syntax for virtual attribute that is an array
   end
 
   def set_post
