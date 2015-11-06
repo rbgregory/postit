@@ -1,5 +1,10 @@
 class PostsController < ApplicationController
+  # purpose of before_action:
+  # 1. set up something
+  # 2. redirect away from action
   before_action :set_post, only: [:show, :edit, :update]
+  before_action :require_user, except: [:index, :show]
+
   def index
     @posts = Post.all
   end
@@ -14,7 +19,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.creator = User.first #TODO: change once we have authentication... this is just
+    @post.creator = current_user  #User.first #TODO: change once we have authentication... this is just
                                #to make sure our post does not have a nil foreign key for
                                #the user.
 
