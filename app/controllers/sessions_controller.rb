@@ -18,6 +18,7 @@ class SessionsController < ApplicationController
       redirect_to root_path
     else
       flash[:error] = "There's something wrong with your username or password."
+      session[:user_id] = nil
       redirect_to register_path
     end
   end

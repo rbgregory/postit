@@ -20,15 +20,36 @@
     </li>
   </ul>
 </div>
-<div class='nav_item'>
-  <%= link_to 'New Post', new_post_path, class: 'btn btn-success btn-small' %>
-</div>
 <% if logged_in? %>
-  <div>
-    Hi <%= current_user.username %>
-  </div>
   <div class='nav_item'>
-    <%= link_to 'Log out', logout_path, class: 'btn btn-success btn-small' %>
+    <%= link_to 'New Post', new_post_path, class: 'btn btn-success btn-small' %>
+  </div>
+  <div class='btn-group nav_item'>
+    <%= link_to '#', class: 'btn btn-small dropdown-toggle', 'data-toggle' => 'dropdown' do %>
+      <%= current_user.username %> <span class='caret'></span>
+    <% end %>
+    <ul class='dropdown-menu'>
+    <% if true %>
+      <li>
+        <%= link_to (edit_user_path) do %>
+          <i class="icon-pencil"></i>
+          Edit profile
+        <% end %>
+      </li>
+      <li>
+        <%= link_to (user_path) do %>
+          <i class="icon-user"></i>
+          View profile
+        <% end %>
+      </li>
+    <% end %>
+      <li>
+        <%= link_to (logout_path) do %>
+          <i class="icon-circle-arrow-left"></i>
+          Logout
+        <% end %>
+      </li>
+
   </div>
 <% else %>
   <div class='nav_item'>

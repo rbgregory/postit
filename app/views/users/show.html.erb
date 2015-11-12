@@ -1,0 +1,32 @@
+<h4>Profile: <%= current_user.username %></h4>
+
+<div class='well'>
+  <%= form_for [current_user] do |f| %>
+    Username: <%= current_user.username %>
+    </p>
+    Time Zone:
+    </p>
+  <% end %>
+</div>
+
+<h5><%= current_user.username %>'s Activity </h5>
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#posts_tab">Posts ()</a></li>
+  <li><a data-toggle="tab" href="#comments_tab">Comments ()</a></li>
+</ul>
+<div class="tab-content">
+  <div id="posts_tab" class="tab-pane fade in active">
+    <% @posts.each do |post| %>
+      <%= render 'posts/posts', post: post if post.user_id == current_user.id %>
+    <% end %>
+  </div>
+  <div id="comments_tab" class="tab-pane fade in active">
+    <% @comments.each do |comment| %>
+      <% if comment.user_id == current_user.id %>
+        <em>"<%= comment.comment %>"</em>
+        <span class='quiet'> by </span> <%= comment.creator.username %>
+        <small>at <%= display_datetime(comment.created_at) %></small>
+      <% end %>
+    <% end %>
+  </div>
+</div>

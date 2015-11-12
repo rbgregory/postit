@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
 
   def current_user
     #if there is an authenticated user, return user obj, else nil
-
+    # Memoization
+    # a ||= b is shorthand a || a = b, e.g., the assignment happens only once
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
