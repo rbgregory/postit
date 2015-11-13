@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update]
+  before_action :require_same_user, only: [:edit, :update]
+
   def show
     if !logged_in?
       redirect_to root_path
@@ -47,4 +50,14 @@ private
     params.require(:user).permit(:username, :password)
   end
 
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def require_same_user
+    if current_user != @user
+      flash[:error] = "You are not allowed to do that."
+      redirect_to root_path
+    end
+  end
 end

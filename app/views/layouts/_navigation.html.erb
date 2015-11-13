@@ -31,20 +31,20 @@
     <ul class='dropdown-menu'>
     <% if true %>
       <li>
-        <%= link_to (edit_user_path) do %>
+        <%= link_to edit_user_path(current_user) do %>
           <i class="icon-pencil"></i>
           Edit profile
         <% end %>
       </li>
       <li>
-        <%= link_to (user_path) do %>
+        <%= link_to user_path(current_user) do %>
           <i class="icon-user"></i>
           View profile
         <% end %>
       </li>
     <% end %>
       <li>
-        <%= link_to (logout_path) do %>
+        <%= link_to logout_path(current_user) do %>
           <i class="icon-circle-arrow-left"></i>
           Logout
         <% end %>

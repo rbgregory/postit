@@ -1,32 +1,29 @@
-<h4>Profile: <%= current_user.username %></h4>
+<%= render 'shared/content_title', title: "Profile: #{@user.username}" %>
 
 <div class='well'>
-  <%= form_for [current_user] do |f| %>
-    Username: <%= current_user.username %>
-    </p>
-    Time Zone:
-    </p>
-  <% end %>
+  <dl class='dl-horizontal'>
+    <dt>Username:</dt>
+    <dd><%= @user.username %></dd>
+  </dl>
 </div>
 
-<h5><%= current_user.username %>'s Activity </h5>
+<h5><%= @user.username %>'s Activity </h5>
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#posts_tab">Posts ()</a></li>
-  <li><a data-toggle="tab" href="#comments_tab">Comments ()</a></li>
+  <li class='<%= 'active' if params[:tab].nil? %>'>
+    <%= link_to "Posts (#{@user.posts.size})", user_path(@user) %>
+  </li>
+  <li class='<%= 'active' if params[:tab] == 'comments_tab' %> '>
+    <%= link_to "Comments (#{@user.comments.size})", user_path(@user, tab: 'comments_tab') %>
+  </li>
 </ul>
-<div class="tab-content">
-  <div id="posts_tab" class="tab-pane fade in active">
-    <% @posts.each do |post| %>
-      <%= render 'posts/posts', post: post if post.user_id == current_user.id %>
+<% if params[:tab].nil? %>
+    <% @user.posts.each do |post| %>
+      <%= render 'posts/posts', post: post %>
     <% end %>
-  </div>
-  <div id="comments_tab" class="tab-pane fade in active">
-    <% @comments.each do |comment| %>
-      <% if comment.user_id == current_user.id %>
-        <em>"<%= comment.comment %>"</em>
-        <span class='quiet'> by </span> <%= comment.creator.username %>
-        <small>at <%= display_datetime(comment.created_at) %></small>
-      <% end %>
-    <% end %>
-  </div>
-</div>
+<% elsif params[:tab] == 'comments_tab' %>
+  <% @user.comments.each do |comment| %>
+    <%= render 'comments/comment', comment: comment, show_post: true %>
+  <% end %>
+<% end %>
+
+<!--div class="tab-content" -->
