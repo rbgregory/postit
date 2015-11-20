@@ -18,7 +18,11 @@ PostitTemplate::Application.routes.draw do
     #  get :archives
     #end
 
-    resources :comments, only: [:create]
+    resources :comments, only: [:create] do
+      member do
+        post :vote
+      end
+    end
    # resources :votes, only: [:create]  # this would do a /posts/:id/votes => votes#create
   end
   resources :categories, only: [:new, :create, :show]
