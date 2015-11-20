@@ -11,6 +11,8 @@ PostitTemplate::Application.routes.draw do
       post :vote
     end
 
+    #collection is where we put routes that do not
+    #pertain to individual posts
     #GET /posts/archives
     #collection do
     #  get :archives
