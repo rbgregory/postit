@@ -17,6 +17,7 @@ class CommentsController < ApplicationController
   end
 
   def vote
+    require_user
     comment = Comment.find(params[:id])
     @vote = Vote.create(voteable: comment, creator: current_user, vote: params[:vote])
     if @vote.valid?
