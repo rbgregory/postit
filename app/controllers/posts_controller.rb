@@ -45,14 +45,23 @@ class PostsController < ApplicationController
 
   def vote
     require_user
-      @vote = Vote.create(voteable: @post, creator: current_user, vote: params[:vote])
+    @vote = Vote.create(voteable: @post, creator: current_user, vote: params[:vote])
 
-      if @vote.valid?
-        flash[:notice] = "Your vote was counted."
-      else
-        flash[:error] = "You can only vote once."
+    respond_to do |format|
+      format.html do
+        if @vote.valid?
+          flash[:notice] = "Your vote was counted."
+        else
+          flash[:notice] = "You can only vote on a post once."
+        end
+        redirect_to :back #wherever you came from...
+        #The redirect has to go here... after the format.js is no good because you can render
+        #or redirect, but you can't do both.
       end
-      redirect_to :back #wherever you came from...
+
+      format.js  # the default is that rails will try to render a template by the same name
+                 # as the action.  In this case, it would be vote.js.erb in the post controller.
+    end
   end
 
 private
