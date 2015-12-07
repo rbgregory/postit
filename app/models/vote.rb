@@ -4,5 +4,5 @@ class Vote < ActiveRecord::Base
   belongs_to :voteable, polymorphic: true # rails will now load for voteable_type and voteable_id
 
   #todo: read documentation on scope
-  validates_uniqueness_of :creator, scope: [:voteable_type, :voteable_id]
+  #validates_uniqueness_of :creator, scope: [:voteable_type, :voteable_id]
 end
