@@ -25,6 +25,10 @@
 
 <h5>Comments:</h5>
 
-<% @post.comments.each do |comment| %>
+<!-- reload.. on validation error, we have a comment that is not saved in the datebase associated
+with this post... and we are trying to render that particular comment.  By doing a reload, only the
+saved comments are associated with this post.
+-->
+<% @post.reload.comments.each do |comment| %>
   <%= render 'comments/comment', comment: comment %>
 <% end %>
