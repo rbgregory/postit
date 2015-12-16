@@ -1,6 +1,7 @@
 #Note that this module gets loaded by rails due to the config.autoload_paths += %W(#{config.root}/lib)
 #line in the application.rb file.
 #using concerns
+=begin
 module Voteable
   extend ActiveSupport::Concern
 
@@ -21,7 +22,7 @@ module Voteable
   end
 
 end
-
+=end
 =begin
 module Voteable
   def self.included(base)
