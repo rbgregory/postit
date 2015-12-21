@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)      #mass assignment
       flash[:notice] = "User was updated."
-      redirect_to post_path
+      redirect_to user_path
     else
       render :edit
     end
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 private
 
   def user_params
-    params.require(:user).permit(:username, :password)
+    params.require(:user).permit(:username, :password, :time_zone)
   end
 
   def set_user

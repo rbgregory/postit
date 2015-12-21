@@ -4,6 +4,7 @@ class PostsController < ApplicationController
   # 2. redirect away from action
   before_action :set_post, only: [:show, :edit, :update, :vote]
   before_action :require_user, except: [:index, :show]
+  before_action :require_creator, only: [:edit, :update]
 
   def index
     @posts = Post.all.sort_by{|x| x.total_votes}.reverse
@@ -11,6 +12,15 @@ class PostsController < ApplicationController
 
   def show
     @comment = Comment.new
+
+=begin
+ #playing around with exposing API, working along with the lecture.
+    respond_to do |format|
+      format.html
+      format.json { render json: @post }
+      format.xml { render xml: @post }
+    end
+=end
   end
 
   def new
@@ -76,4 +86,7 @@ private
     @post = Post.find_by slug: params[:id]
   end
 
+  def require_creator
+    access_denied unless logged_in? and (current_user == @post.creator || current_user.admin?)
+  end
 end
